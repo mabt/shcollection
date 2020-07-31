@@ -1,4 +1,3 @@
-
 swap off -a
 sed -e '/.*none.*swap.*/ s/^#*/#/' -i /etc/fstab
 mount -a
