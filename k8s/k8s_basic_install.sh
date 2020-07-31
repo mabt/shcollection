@@ -1,8 +1,7 @@
-swap off -a
+swapoff -a
 sed -e '/.*none.*swap.*/ s/^#*/#/' -i /etc/fstab
 mount -a
 
-# https://kubernetes.io/fr/docs/setup/independent/install-kubeadm/
 apt-get update && apt-get install -y apt-transport-https curl gnupg
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
