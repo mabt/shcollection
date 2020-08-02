@@ -2,10 +2,11 @@ swapoff -a
 sed -e '/.*none.*swap.*/ s/^#*/#/' -i /etc/fstab
 mount -a
 
-apt-get update && apt-get install -y apt-transport-https ca-certificates curl software-properties-common gnupg2 > /dev/null 2>&1
+apt-get update > /dev/null 2>&1 &&
+apt-get install -y apt-transport-https ca-certificates curl software-properties-common gnupg2 > /dev/null 2>&1
 
 # docker
-curl -fsSL https://get.docker.com | sh; > /dev/null 2>&1
+curl -fsSL https://get.docker.com | sh;
 sudo usermod -aG docker $USER
 groupadd -g 500000 dockremap && 
 groupadd -g 501000 dockremap-user && 
