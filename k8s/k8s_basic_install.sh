@@ -4,6 +4,9 @@ export DEBIAN_FRONTEND=noninteractive
 # Update source list and log the output to file
 apt-get update > /tmp/init-script.log
 apt-get -y install apt-transport-https ca-certificates curl software-properties-common gnupg2 > /tmp/init-script.log
+
+sleep 3
+
 swapoff -a 
 
 # docker install
@@ -22,7 +25,10 @@ echo "
   }
 " > /etc/docker/daemon.json
 
-systemctl daemon-reload && systemctl restart docker
+systemctl daemon-reload &&
+systemctl restart docker
+
+sleep 3
 
 # k8s install
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
