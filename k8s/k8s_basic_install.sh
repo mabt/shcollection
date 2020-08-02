@@ -1,9 +1,14 @@
+#!/bin/bash
+# Run the commands in a noninteractive mode
+export DEBIAN_FRONTEND=noninteractive
+# Update source list and log the output to file
+apt-get update > /tmp/init-script.log
+apt-get -y install apt-transport-https ca-certificates curl software-properties-common gnupg2 > /tmp/init-script.log
 swapoff -a 
-apt-get update && apt-get install -y apt-transport-https ca-certificates curl software-properties-common gnupg2
 
-# docker
-curl -fsSL https://get.docker.com | sh;
-usermod -aG docker $USER
+# docker install
+curl -fsSL https://get.docker.com | sh &&
+usermod -aG docker $USER &&
 groupadd -g 500000 dockremap && 
 groupadd -g 501000 dockremap-user && 
 useradd -u 500000 -g dockremap -s /bin/false dockremap && 
@@ -18,7 +23,6 @@ echo "
 " > /etc/docker/daemon.json
 
 systemctl daemon-reload && systemctl restart docker
-
 
 # k8s install
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
