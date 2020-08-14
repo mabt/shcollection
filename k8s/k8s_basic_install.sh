@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # swapoff -a 
-apt-get update && apt-get -y install apt-transport-https ca-certificates curl software-properties-common gnupg2 > /home/install.log
+apt-get update && apt-get -y install apt-transport-https ca-certificates curl software-properties-common gnupg2 bash-completion lynx net-tools emacs-nox tmux > /home/install.log
 
 # docker install
 curl -fsSL https://get.docker.com | sh &&
@@ -29,3 +29,5 @@ add-apt-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 apt-get update && apt-get install -y kubelet kubeadm kubectl kubernetes-cni
 systemctl enable kubelet
 apt-mark hold kubelet kubeadm kubectl kubernetes-cni
+
+echo "source <(kubectl completion bash)" >> ~/.bashrc
