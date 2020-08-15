@@ -8,5 +8,6 @@ echo "deb https://packages.grafana.com/oss/deb stable main" | tee -a /etc/apt/so
 
 apt-get update && apt-get install grafana -y
 
-systemctl enable grafana
-systemctl start grafana
+systemctl enable grafana-server
+systemctl daemon-reload
+systemctl start grafana-server
