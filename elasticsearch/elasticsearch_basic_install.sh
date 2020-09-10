@@ -9,7 +9,7 @@ sudo apt-get install -y apt-transport-https
 
 apt-get update && apt-get -y install elasticsearch
 
-systemctl enable elasticsearsh
+systemctl enable elasticsearch
 systemctl daemon-reload
-systemctl start elasticsearsh
+systemctl start elasticsearch
 

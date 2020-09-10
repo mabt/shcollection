@@ -9,9 +9,9 @@ sudo apt-get install -y apt-transport-https
 
 apt-get update && apt-get -y install elasticsearch
 
-systemctl enable elasticsearsh
+systemctl enable elasticsearch
 systemctl daemon-reload
-systemctl start elasticsearsh
+systemctl start elasticsearch
 
 /usr/share/elasticsearch/bin/elasticsearch-plugin -s install analysis-phonetic
 /usr/share/elasticsearch/bin/elasticsearch-plugin -s install analysis-icu
