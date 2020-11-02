@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# See more : https://github.com/allinurl/goaccess
+
 apt-get install -y libncursesw5-dev libgeoip-dev
 cd /root/
 wget https://tar.goaccess.io/goaccess-1.4.tar.gz
