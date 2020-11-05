@@ -2,7 +2,7 @@
 
 apt update && apt-get install -y varnish
 
-#systemctl enable monit
+#systemctl enable varnish
 
 
 
