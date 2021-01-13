@@ -20,6 +20,13 @@ bin/magento setup:install \
 --timezone=Europe/Paris \
 --use-rewrites=1
 
+--elasticsearch-host localhost \
+--elasticsearch-port 9200 \
+--elasticsearch-enable-auth 1 \
+--elasticsearch-username "USER" \
+--elasticsearch-password "PASS" \
+--elasticsearch-index-prefix "USER.magento2" \
+
 magerun2 setup:upgrade
 magerun2 indexer:reindex
 magerun2 setup:static-content:deploy
@@ -27,7 +34,10 @@ magerun2 setup:di:compile
 magerun2 deploy:mode:set production
 magerun2 deploy:mode:set developer
 magerun2 setup:static-content:deploy
-bin/magento sampledata:deploy
 magerun2 cache:clean && magerun2 cache:f
 
 bin/magento module:disable Magento_TwoFactorAuth
+bin/magento sampledata:deploy
+
+magerun2 db:query "SELECT * FROM core_config_data WHERE path='admin/url/custom_path';" # check baseurl
+magerun2 config:set web/unsecure/base_url https://devm2.exemple.com/
