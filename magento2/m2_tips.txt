@@ -4,29 +4,39 @@ exit
 
 composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition .
 
+# Install
 bin/magento setup:install \
 --base-url=https://devm2.exemple.com/ \
 --db-host=localhost \
 --db-name=devm2 \
 --db-user=devm2 \
---db-password=passwd\
+--db-password=******\
 --admin-firstname=admin \
 --admin-lastname=admin \
 --admin-email=admin@admin.com \
 --admin-user=admin \
---admin-password=passwd \
+--admin-password=******* \
 --language=fr_FR \
 --currency=EUR \
 --timezone=Europe/Paris \
 --use-rewrites=1
 
+# Elasticsearch
 --elasticsearch-host localhost \
 --elasticsearch-port 9200 \
 --elasticsearch-enable-auth 1 \
 --elasticsearch-username "USER" \
---elasticsearch-password "PASS" \
+--elasticsearch-password "******" \
 --elasticsearch-index-prefix "USER.magento2" \
 
+# REDIS
+php bin/magento setup:config:set –cache-backend=redis
+–cache-backend-redis-server=127.0.0.1 \
+–cache-backend-redis-port=6379 \
+–cache-backend-redis-db=0 \
+–cache-backend-redis-password=****** \
+
+# Misc
 magerun2 setup:upgrade
 magerun2 indexer:reindex
 magerun2 setup:static-content:deploy
@@ -36,6 +46,7 @@ magerun2 deploy:mode:set developer
 magerun2 setup:static-content:deploy
 magerun2 cache:clean && magerun2 cache:f
 
+bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server=127.0.0.1 --cache-backend-redis-db=0
 bin/magento module:disable Magento_TwoFactorAuth
 bin/magento sampledata:deploy
 
