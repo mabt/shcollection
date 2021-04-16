@@ -15,3 +15,15 @@ systemctl start elasticsearch
 
 /usr/share/elasticsearch/bin/elasticsearch-plugin -s install analysis-phonetic
 /usr/share/elasticsearch/bin/elasticsearch-plugin -s install analysis-icu
+
+
+ES_PATH_CONF=/etc/elasticsearch/mn93237-1690 /usr/share/elasticsearch/bin/elasticsearch-plugin install -f /root/analysis-icu-7.12.0.zip 
+
+# if it doesn't works dl from : https://www.elastic.co/guide/en/elasticsearch/plugins/current/plugin-management-custom-url.html
+
+wget https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-7.12.0.zip
+wget https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-phonetic/analysis-phonetic-7.12.0.zip
+
+ES_PATH_CONF=/etc/elasticsearch/mn93237-1690 /usr/share/elasticsearch/bin/elasticsearch-plugin install file:/root/analysis-icu-7.12.0.zip 
+ES_PATH_CONF=/etc/elasticsearch/mn93237-1690 /usr/share/elasticsearch/bin/elasticsearch-plugin install file:/root/analysis-phonetic-7.12.0.zip 
+systemctl restart elasticsearch-mn93237-1690.service
