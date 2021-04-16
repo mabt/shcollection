@@ -25,3 +25,6 @@ systemctl restart varnish-$NAME
 
 echo ""
 echo "systemctl status varnish-'${NAME}'.service"
+echo ""
+echo "Port :"
+echo $PORT
