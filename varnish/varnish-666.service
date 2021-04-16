@@ -6,7 +6,7 @@ Documentation=https://www.varnish-cache.org/docs/6.1/ man:varnishd
 Type=simple
 LimitNOFILE=131072
 LimitMEMLOCK=82000
-ExecStart=/usr/sbin/varnishd -j unix,user=vcache -F -a :66666 -T localhost:77777 -f /etc/varnish/default.666.vcl -n 666 -S /etc/varnish/secret -p vcc_allow_inline_c=on -s file,/var/lib/varnish/666/varnish_storage.bin,20G -p workspace_client=256k -p http_resp_hdr_len=64k -p http_resp_size=96k -p workspace_backend=256k
+ExecStart=/usr/sbin/varnishd -j unix,user=vcache -F -a :55555 -T localhost:77777 -f /etc/varnish/default.666.vcl -n 666 -S /etc/varnish/secret -p vcc_allow_inline_c=on -s file,/var/lib/varnish/666/varnish_storage.bin,20G -p workspace_client=256k -p http_resp_hdr_len=64k -p http_resp_size=96k -p workspace_backend=256k
 ProtectSystem=full
 ProtectHome=true
 PrivateTmp=true

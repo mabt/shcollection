@@ -13,7 +13,7 @@ curl https://raw.githubusercontent.com/mabt/shcollection/master/varnish/apache2-
 
 sed -i 's/666/'${NAME}'/g' /lib/systemd/system/varnishncsa-$NAME.service
 sed -i 's/666/'${NAME}'/g' /lib/systemd/system/varnish-$NAME.service
-sed -i 's/66666/'${PORT}'/g' /lib/systemd/system/varnish-$NAME.service
+sed -i 's/55555/'${PORT}'/g' /lib/systemd/system/varnish-$NAME.service
 sed -i 's/77777/'${PORT}'/g' /lib/systemd/system/varnish-$NAME.service
 
 [[ -e /var/lib/varnish/${NAME} ]] || mkdir /var/lib/varnish/$NAME
