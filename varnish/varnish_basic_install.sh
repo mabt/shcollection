@@ -3,6 +3,7 @@
 NAME="prod-m2"
 PORT="10081"
 PORT2="10082"
+
 apt-get update && apt-get install -y curl varnish                                                                                                                                                                                                                                    
 
 curl https://raw.githubusercontent.com/mabt/shcollection/master/varnish/varnishncsa-666.service --output /lib/systemd/system/varnishncsa-$NAME.service
@@ -15,7 +16,7 @@ sed -i 's/666/'${NAME}'/g' /lib/systemd/system/varnish-$NAME.service
 sed -i 's/66666/'${PORT}'/g' /lib/systemd/system/varnish-$NAME.service
 sed -i 's/77777/'${PORT}'/g' /lib/systemd/system/varnish-$NAME.service
 
-mkdir /var/lib/varnish/$NAME
+[[ -e /var/lib/varnish/${NAME} ]] || mkdir /var/lib/varnish/$NAME
 chown varnish. /var/lib/varnish/$NAME
 
 systemctl enable varnish-$NAME
