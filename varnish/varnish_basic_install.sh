@@ -23,3 +23,5 @@ systemctl enable varnish-$NAME
 systemctl daemon-reload
 systemctl restart varnish-$NAME
 
+echo ""
+echo "systemctl status varnish-'${NAME}'.service"
