@@ -1,15 +1,15 @@
 [Unit]
-Description=Varnish HTTP accelerator log daemon m2dev
+Description=Varnish HTTP accelerator log daemon 666
 Documentation=https://www.varnish-cache.org/docs/6.1/ man:varnishncsa
 After=varnish.service
 
 [Service]
 Type=forking
-PIDFile=/run/varnishncsa/varnishncsa-m2dev.pid
+PIDFile=/run/varnishncsa/varnishncsa-666.pid
 RuntimeDirectory=varnishncsa
 User=varnishlog
 Group=varnish
-ExecStart=/usr/bin/varnishncsa -a -n m2dev -w /var/log/varnish/varnishncsa-m2dev.log -D -P /run/varnishncsa/varnishncsa-m2dev.pid
+ExecStart=/usr/bin/varnishncsa -a -n 666 -w /var/log/varnish/varnishncsa-666.log -D -P /run/varnishncsa/varnishncsa-666.pid
 ExecReload=/bin/kill -HUP $MAINPID
 PrivateDevices=true
 PrivateTmp=true
