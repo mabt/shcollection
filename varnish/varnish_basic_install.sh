@@ -3,6 +3,7 @@
 NAME="prod-m2"
 PORT="10081"
 PORT2="10082"
+#PORT3="8080" TODO pour apache2
 
 apt-get update && apt-get install -y curl varnish                                                                                                                                                                                                                                    
 
@@ -13,6 +14,7 @@ curl https://raw.githubusercontent.com/mabt/shcollection/master/varnish/varnish-
 curl https://raw.githubusercontent.com/mabt/shcollection/master/varnish/default.666.vcl  --output /etc/varnish/default.$NAME.vcl
 curl https://raw.githubusercontent.com/mabt/shcollection/master/varnish/apache2-vhost-varnished-example.conf --output /etc/apache2/varnish-example-$NAME.conf
 curl https://raw.githubusercontent.com/mabt/shcollection/master/varnish/apache2-varnish.conf --output /etc/apache2/conf-enabled/varnish.conf
+
 
 sed -i 's/666/'${NAME}'/g' /lib/systemd/system/varnishncsa-$NAME.service
 sed -i 's/666/'${NAME}'/g' /lib/systemd/system/varnish-$NAME.service
