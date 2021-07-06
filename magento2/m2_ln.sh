@@ -8,7 +8,7 @@ PATH_SHARED=/home/xUSERX/www/xUSERX/shared
 FILES="/app/etc/config.local.php
 /app/etc/env.php
 /pub/media
-/pub/sitemaps sitemaps
+/pub/sitemaps
 /var/backups
 /var/composer_home
 /var/export
