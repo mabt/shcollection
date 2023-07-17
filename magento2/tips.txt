@@ -1,0 +1,82 @@
+#!/bin/bash
+
+exit
+
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition .
+
+# Install
+bin/magento setup:install \
+--base-url=https://devm2.exemple.com/ \
+--db-host=localhost \
+--db-name=devm2 \
+--db-user=devm2 \
+--db-password=****** \
+--admin-firstname=admin \
+--admin-lastname=admin \
+--admin-email=admin@admin.com \
+--admin-user=admin \
+--admin-password=******* \
+--language=fr_FR \
+--currency=EUR \
+--timezone=Europe/Paris \
+--use-rewrites=1
+
+# Elasticsearch
+--elasticsearch-host localhost \
+--elasticsearch-port 9200 \
+--elasticsearch-enable-auth 1 \
+--elasticsearch-username "USER" \
+--elasticsearch-password "******" \
+--elasticsearch-index-prefix "USER.magento2" \
+
+# Redis
+php bin/magento setup:config:set –cache-backend=redis
+–cache-backend-redis-server=127.0.0.1 \
+–cache-backend-redis-port=6379 \
+–cache-backend-redis-db=0 \
+–cache-backend-redis-password=****** \
+
+# Misc
+bin/magento setup:upgrade
+bin/magento indexer:reindex
+bin/magento setup:di:compile
+bin/magento deploy:mode:set production
+bin/magento deploy:mode:set developer
+bin/magento setup:static-content:deploy
+bin/magento cache:clean && bin/magento cache:f
+
+# Varnish http-cache-host
+php bin/magento setup:config:set --http-cache-hosts=127.0.0.1:10081 # where 10081 = proxy_pass
+
+bin/magento module:disable Magento_TwoFactorAuth
+bin/magento sampledata:deploy
+
+bin/magento db:query "SELECT * FROM core_config_data WHERE path='admin/url/custom_path';"
+bin/magento config:set web/unsecure/base_url https://devm2.exemple.com/
+
+select * from core_config_data where path like '%base%url%';
+
+update core_config_data set value = 'https://www.test.fr/' where path = 'web/unsecure/base_url';
+update core_config_data set value = 'https://www.test.fr/' where path = 'web/secure/base_url';
+update core_config_data set value = 'https://www.testpros.com/' where path = 'web/unsecure/base_url' and config_id = '64';
+update core_config_data set value = 'https://www.testpros.com/' where path = 'web/secure/base_url' and config_id = '1419';
+
+update core_config_data set value = 'https://test.com/' where path = 'web/cookie/cookie_domain';
+
+CREATE DATABASE `test`;
+CREATE USER 'test'@'localhost' IDENTIFIED BY 'PASSWORD';
+GRANT ALL ON test.* TO 'test'@'localhost';
+SHOW GRANTS FOR 'test'@'localhost';
+
+rm -rf var/di/* var/generation/* var/cache/* var/log/* var/page_cache/* var/session/* var/view_preprocessed/* pub/static/*
+rm -rf var/generation/* var/cache/* var/report/* pub/static/frontend/* var/page_cache/* generated/*
+rm -rf var/di/* var/generation/* var/cache/* var/log/* var/page_cache/* var/session/* var/view_preprocessed/*
+php bin/magento setup:upgrade
+php bin/magento setup:di:compile
+php bin/magento cache:clean && php bin/magento cache:f
+chown -R user. .
+
+php bin/magento setup:static-content:deploy
+php bin/magento setup:static-content:deploy fr_FR
+php bin/magento setup:static-content:deploy fr_FR -f
+php bin/magento indexer:reindex

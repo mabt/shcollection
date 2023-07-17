@@ -1,0 +1,93 @@
+https://archlinux.org/download/
+
+dd bs=4M if=path/to/archlinux-version-x86_64.iso of=/dev/sdx conv=fsync oflag=direct status=progress
+
+boot uefi
+
+loadkeys fr
+ls /sys/firmware/efi/efivars # check uefi
+
+timedatectl set-ntp true
+
+fdisk -l
+mkfs.ext4 /dev/nvme0n1p2
+mkfs.fat -F32 /dev/nvme0n1p1
+
+mount /dev/nvme0n1p2 /mnt
+mkdir /mnt/boot
+mount /dev/nvme0n1p1 /mnt/boot
+mkdir /mnt/boot/EFI
+swapon /dev/nvme0n1p2
+
+pacstrap /mnt base base-devel linux linux-firmware nano
+genfstab -U /mnt >> /mnt/etc/fstab
+
+
+arch-chroot /mnt
+
+ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+hwclock --systohc # horloge matérielle sur l'heure système
+nano /etc/locale.gen # uncomment en_US.UTF-8
+locale-gen
+echo "desktop" > /etc/hostname
+echo "127.0.0.1 localhost" > /etc/hosts
+pacman -S linux
+
+passwd
+
+pacman -S git dhcpcd grub sudo  net-tools base-devel
+
+useradd --create-home mabe
+echo "%mabe ALL=(ALL:ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/mabe
+su mabe -
+
+pacman -S grub
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --boot-directory=/boot/EFI --recheck --removable
+sudo grub-mkconfig -o /boot/EFI/grub/grub.cfg
+#mkinitcpio -P # if encrypt
+
+systemctl enable dhcpcd
+systemctl enable NetworkManager
+systemctl enable ntpd
+
+reboot
+
+localectl set-x11-keymap fr
+localectl status
+
+pacman -S xorg xorg-xinit xorg-xrandr xf86-video-amdgpu i3
+
+pacman -S networkmanager network-manager-applet rofi dunst alsa-utils pulseaudio pavucontrol pasystray tmux \
+keepassxc discord nextcloud filezilla featherpad libreoffice chromium terminator gimp imagemagick transmission-qt htop nemo \
+unp telegram-desktop polybar openvpn gthumb flameshot emacs-nox p7zip unzip unrar-free dog whois typora curl wget \
+network-manager-applet vlc zvbi kdenlive openssh sshfs rsync percona-server-clients bash-completion bzip2 iotop ncdu traceroute \
+gpg python python-pip typora nemo-fileroller nemo-image-converter 
+
+pacman -S noto-fonts noto-fonts-emoji ttf-dejavu
+
+cd /tmp && git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+
+yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs
+
+# swap
+dd if=/dev/zero of=/swapfile bs=1M count=8k status=progress
+chmod 0600 /swapfile
+mkswap -U clear /swapfile
+swapon /swapfile
+/swapfile none swap defaults 0 0 # /etc/fstab
+
+
+pacman -S gnome-keyring
+
+/etc/pam.d/login
+auth       optional     pam_gnome_keyring.so
+session    optional     pam_gnome_keyring.so auto_start
+
+.xinitrc
+eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK
+
+echo "[[ "$(tty)" == '/dev/tty1' ]] && [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx" > .bash_profile
+echo "exec i3 > .xinitrc
