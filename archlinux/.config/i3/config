@@ -1,0 +1,183 @@
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+# mod alt/win
+set $mod Mod1
+
+# topbar font
+font pango:monospace 11
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec --no-startup-id terminator
+
+# kill focused window
+bindsym $mod+Shift+a kill
+
+# dmenu replacement
+bindsym $mod+d exec --no-startup-id rofi -show run
+
+# change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+m move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+z layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# border window size
+default_border pixel 3
+
+#border color
+# class                 border  backgr. text    indicator child_border
+client.focused          #002b36 #586e75 #fdf6e3 #268bd2
+client.focused_inactive #0d1010 #212121 #d9d9d9 #0d1010 #063340
+client.unfocused        #d9d9d9 #cecece #000000 #d9d9d9 #d9d9d9
+client.focused          #0d1010 #212121 #d9d9d9 #424242 #063340
+
+# focus the parent container
+bindsym $mod+q focus parent
+
+# dunst history
+bindsym $mod+n exec "dunstctl history-pop"
+
+#set workspace name
+set $tag1 "1"
+set $tag2 "2"
+set $tag3 "3"
+set $tag4 "4"
+set $tag5 "5"
+set $tag6 "6"
+set $tag7 "7"
+set $tag8 "8"
+set $tag9 "9"
+set $tag10 "10"
+
+# switch to workspace
+bindsym $mod+ampersand workspace $tag1
+bindsym $mod+eacute workspace $tag2
+bindsym $mod+quotedbl workspace $tag3
+bindsym $mod+apostrophe workspace $tag4
+bindsym $mod+parenleft workspace $tag5
+bindsym $mod+minus workspace $tag6
+bindsym $mod+egrave workspace $tag7
+bindsym $mod+underscore workspace $tag8
+bindsym $mod+ccedilla workspace $tag9
+bindsym $mod+agrave workspace $tag10
+
+# move focused container to workspace
+bindsym $mod+Shift+ampersand move container to workspace $tag1
+bindsym $mod+Shift+eacute move container to workspace $tag2
+bindsym $mod+Shift+quotedbl move container to workspace $tag3
+bindsym $mod+Shift+apostrophe move container to workspace $tag4
+bindsym $mod+Shift+5 move container to workspace $tag5
+bindsym $mod+Shift+minus move container to workspace $tag6
+bindsym $mod+Shift+egrave move container to workspace $tag7
+bindsym $mod+Shift+underscore move container to workspace $tag8
+bindsym $mod+Shift+ccedilla move container to workspace $tag9
+bindsym $mod+Shift+agrave move container to workspace $tag10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
+mode "resize" {
+        bindsym Left resize shrink width 20 px or 20 ppt
+        bindsym Down resize grow height 20 px or 20 ppt
+        bindsym Up resize shrink height 20 px or 20 ppt
+        bindsym Right resize grow width 20 px or 20 ppt
+
+	# back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# windows gaps
+gaps inner 6
+gaps outer 3
+
+# volume sinl auto detect
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# screenshot
+bindsym Print exec --no-startup-id /usr/bin/flameshot gui
+
+# redshifter
+bindsym $mod+m exec "redshifter"
+
+# startups
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+#exec_always --no-startup-id feh --bg-fill ~/Nextcloud/wallpapers/arch.png
+exec --no-startup-id pasystray
+exec --no-startup-id nm-applet
+exec --no-startup-id nextcloud
+exec --no-startup-id keepassxc
+exec --no-startup-id discord
+exec --no-startup-id nemo
+exec --no-startup-id dunst
+exec --no-startup-id telegram-desktop
+exec --no-startup-id chromium
+exec --no-startup-id sleep 5 && /opt/Zoiper5/zoiper
+#exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg) &
+#exec --no-startup-id blueman-applet
+#exec --no-startup-id twitch-indicator
+
+# workspaces
+set $Displayoutput "DisplayPort-2"
+#workspace $tag1 output HDMI2
+workspace $tag1 output $Displayoutput
+workspace $tag2 output $Displayoutput
+workspace $tag3 output $Displayoutput
+workspace $tag4 output $Displayoutput
+workspace $tag5 output $Displayoutput
+workspace $tag6 output $Displayoutput
+workspace $tag7 output $Displayoutput
+workspace $tag8 output $Displayoutput
+workspace $tag9 output $Displayoutput
+
+# assigns
+assign [class = "Chromium"           ] $tag1
+assign [class = "discord"            ] $tag2
+assign [class = "TelegramDesktop"    ] $tag2
+assign [class = "Nemo"               ] $tag4
+assign [class = "KeePassXC"          ] $tag9
