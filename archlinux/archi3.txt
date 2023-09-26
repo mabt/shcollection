@@ -32,22 +32,18 @@ echo "127.0.0.1 localhost" > /etc/hosts
 
 passwd
 
-pacman -S git dhcpcd grub sudo net-tools base-devel ntp
-
 useradd --create-home mabe
 passwd mabe
 echo "%mabe ALL=(ALL:ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/mabe
 su mabe -
-
 
 pacman -S grub
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --boot-directory=/boot/EFI --recheck --removable
 sudo grub-mkconfig -o /boot/EFI/grub/grub.cfg
 #mkinitcpio -P # if encrypted
 
+pacman -S git dhcpcd grub sudo net-tools base-devel ntp networkmanager xorg xorg-xinit xorg-xrandr xf86-video-amdgpu i3
 systemctl enable dhcpcd NetworkManager ntpd
-
-pacman -S xorg xorg-xinit xorg-xrandr xf86-video-amdgpu i3
 
 .xinitrc
 eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
@@ -62,18 +58,15 @@ reboot
 localectl set-x11-keymap fr
 localectl status
 
-pacman -S networkmanager network-manager-applet rofi dunst alsa-utils pulseaudio pavucontrol pasystray tmux \
+pacman -S network-manager-applet rofi dunst alsa-utils pulseaudio pavucontrol pasystray tmux \
 keepassxc discord nextcloud filezilla featherpad libreoffice chromium terminator gimp imagemagick transmission-qt htop nemo \
 unp telegram-desktop polybar openvpn gthumb flameshot emacs-nox p7zip unzip unrar-free dog whois curl wget \
 network-manager-applet vlc zvbi kdenlive openssh sshfs rsync percona-server-clients bash-completion bzip2 iotop ncdu traceroute \
-python python-pip nemo-fileroller nemo-image-converter gnome-keyring
-
-pacman -S noto-fonts noto-fonts-emoji ttf-dejavu
+python python-pip nemo-fileroller nemo-image-converter gnome-keyring noto-fonts noto-fonts-emoji ttf-dejavu
 
 cd /tmp && git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
-
 yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora
 
 # swap
