@@ -55,7 +55,7 @@ export SSH_AUTH_SOCK
 exec i3
 
 .bash_profile
-[[ "$(tty)" == '/dev/tty1' ]] && [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
+[[ "$(tty)" == '/dev/tty1' ]] && [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx >/dev/null 2>&1
 
 reboot
 
