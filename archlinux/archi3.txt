@@ -61,7 +61,7 @@ pacman -S networkmanager network-manager-applet rofi dunst alsa-utils pulseaudio
 keepassxc discord nextcloud filezilla featherpad libreoffice chromium terminator gimp imagemagick transmission-qt htop nemo \
 unp telegram-desktop polybar openvpn gthumb flameshot emacs-nox p7zip unzip unrar-free dog whois typora curl wget \
 network-manager-applet vlc zvbi kdenlive openssh sshfs rsync percona-server-clients bash-completion bzip2 iotop ncdu traceroute \
-gpg python python-pip typora nemo-fileroller nemo-image-converter 
+gpg python python-pip nemo-fileroller nemo-image-converter inetutils
 
 pacman -S noto-fonts noto-fonts-emoji ttf-dejavu
 
