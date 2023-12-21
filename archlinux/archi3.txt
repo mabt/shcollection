@@ -73,7 +73,7 @@ python python-pip nemo-fileroller nemo-image-converter gnome-keyring noto-fonts 
 cd /tmp && git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
-yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer
+yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer vlc-bittorrent
 
 # swap
 dd if=/dev/zero of=/swapfile bs=1M count=8k status=progress
