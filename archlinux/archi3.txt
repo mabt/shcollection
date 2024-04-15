@@ -18,6 +18,7 @@ mkdir -p /mnt/boot/EFI
 mount /dev/nvme0n1p1 /mnt/boot
 swapon /dev/nvme0n1p2
 
+pacman -Sy archlinux-keyring && pacman -Syu
 pacstrap /mnt base base-devel linux linux-firmware nano
 genfstab -U /mnt >> /mnt/etc/fstab
 
@@ -37,20 +38,20 @@ passwd mabe
 echo "%mabe ALL=(ALL:ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/mabe
 su mabe -
 
-pacman -S grub
+sudo pacman -S grub git dhcpcd sudo net-tools base-devel ntp networkmanager xorg xorg-xinit xorg-xrandr xf86-video-amdgpu i3
+
+systemctl enable dhcpcd NetworkManager ntpd
+
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --boot-directory=/boot/EFI --recheck --removable
 sudo grub-mkconfig -o /boot/EFI/grub/grub.cfg
 #mkinitcpio -P # if encrypted
 
-pacman -S git dhcpcd grub sudo net-tools base-devel ntp networkmanager xorg xorg-xinit xorg-xrandr xf86-video-amdgpu i3
-systemctl enable dhcpcd NetworkManager ntpd
-
-.xinitrc
+# edit .xinitrc
 eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 exec i3
 
-.bash_profile
+# edit .bash_profile
 [[ "$(tty)" == '/dev/tty1' ]] && [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx >/dev/null 2>&1
 
 reboot
@@ -58,17 +59,12 @@ reboot
 localectl set-x11-keymap fr
 localectl status
 
-pacman -S network-manager-applet rofi dunst alsa-utils pulseaudio pavucontrol pasystray tmux \
+sudo pacman -S network-manager-applet rofi dunst alsa-utils pulseaudio pavucontrol pasystray tmux \
 keepassxc discord nextcloud filezilla featherpad libreoffice chromium terminator gimp imagemagick transmission-qt htop nemo \
 unp telegram-desktop polybar openvpn gthumb flameshot emacs-nox p7zip unzip unrar-free dog whois curl wget \
 network-manager-applet vlc zvbi kdenlive openssh sshfs rsync percona-server-clients bash-completion bzip2 iotop ncdu traceroute \
-<<<<<<< HEAD
-gpg python python-pip nemo-fileroller nemo-image-converter inetutils
-
-pacman -S noto-fonts noto-fonts-emoji ttf-dejavu
-=======
-python python-pip nemo-fileroller nemo-image-converter gnome-keyring noto-fonts noto-fonts-emoji ttf-dejavu
->>>>>>> cea68b4a223b69131064501612e9a9b2c161aaf6
+gpg python python-pip nemo-fileroller nemo-image-converter inetutils noto-fonts noto-fonts-emoji \
+ttf-dejavu python python-pip nemo-fileroller nemo-image-converter gnome-keyring
 
 cd /tmp && git clone https://aur.archlinux.org/yay.git
 cd yay
@@ -82,7 +78,10 @@ mkswap -U clear /swapfile
 swapon /swapfile
 /swapfile none swap defaults 0 0 # /etc/fstab
 
+# gnome keyring
 /etc/pam.d/login
 auth       optional     pam_gnome_keyring.so
 ...
 session    optional     pam_gnome_keyring.so auto_start
+
+xdg-settings set default-web-browser firefox.desktop
