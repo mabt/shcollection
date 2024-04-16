@@ -85,3 +85,6 @@ auth       optional     pam_gnome_keyring.so
 session    optional     pam_gnome_keyring.so auto_start
 
 xdg-settings set default-web-browser firefox.desktop
+
+# firefox
+browser.uidensity 1
