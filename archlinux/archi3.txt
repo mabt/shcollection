@@ -65,7 +65,7 @@ keepassxc discord nextcloud-client filezilla featherpad libreoffice chromium ter
 unp telegram-desktop polybar openvpn gthumb flameshot emacs-nox p7zip unzip unrar-free dog whois curl wget \
 network-manager-applet vlc zvbi kdenlive openssh sshfs rsync percona-server-clients bash-completion bzip2 iotop ncdu traceroute \
 gpg python python-pip nemo-fileroller nemo-image-converter inetutils noto-fonts noto-fonts-emoji \
-ttf-dejavu python python-pip nemo-fileroller nemo-image-converter gnome-keyring thunderbird
+ttf-dejavu python python-pip nemo-fileroller nemo-image-converter gnome-keyring thunderbird ffmpegthumbnailer nmap
 
 cd /tmp && git clone https://aur.archlinux.org/yay.git
 cd yay
@@ -89,4 +89,3 @@ xdg-settings set default-web-browser firefox.desktop
 
 # firefox
 browser.uidensity 1
-
