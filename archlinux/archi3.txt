@@ -89,3 +89,5 @@ xdg-settings set default-web-browser firefox.desktop
 
 # firefox
 browser.uidensity 1
+
+xrandr --output DisplayPort-1 --mode 2560x1440 --right-of DisplayPort-2
