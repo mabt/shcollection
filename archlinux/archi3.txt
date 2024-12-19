@@ -14,7 +14,7 @@ mkfs.ext4 /dev/nvme0n1p2
 mkfs.fat -F32 /dev/nvme0n1p1
 
 mount /dev/nvme0n1p2 /mnt
-mkdir -p /mnt/boot/
+mkdir /mnt/boot/
 mount /dev/nvme0n1p1 /mnt/boot
 swapon /dev/nvme0n1p2
 
@@ -44,10 +44,13 @@ systemctl enable dhcpcd NetworkManager ntpd
 
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --boot-directory=/boot/EFI --recheck --removable
 mkdir -p /boot/EFI/grub/
+# edit /etc/default/grub -> GRUB_DISABLE_OS_PROBER=false
+os-prober
 sudo grub-mkconfig -o /boot/EFI/grub/grub.cfg
+
 #mkinitcpio -P # if encrypted
 
-# edit .xinitrc
+# create .xinitrc
 eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 exec i3
@@ -64,8 +67,8 @@ sudo pacman -S network-manager-applet rofi dunst alsa-utils pulseaudio pavucontr
 keepassxc discord nextcloud-client filezilla featherpad libreoffice chromium terminator gimp imagemagick transmission-qt htop nemo \
 unp telegram-desktop polybar openvpn gthumb flameshot emacs-nox p7zip unzip unrar-free dog whois curl wget \
 network-manager-applet vlc zvbi kdenlive openssh sshfs rsync percona-server-clients bash-completion bzip2 iotop ncdu traceroute \
-gpg python python-pip nemo-fileroller nemo-image-converter inetutils noto-fonts noto-fonts-emoji \
-ttf-dejavu python python-pip nemo-fileroller nemo-image-converter gnome-keyring thunderbird ffmpegthumbnailer nmap
+python python-pip nemo-fileroller nemo-image-converter inetutils noto-fonts noto-fonts-emoji \
+ttf-dejavu python python-pip nemo-fileroller nemo-image-converter gnome-keyring thunderbird ffmpegthumbnailer nmap minidlna os-prober
 
 cd /tmp && git clone https://aur.archlinux.org/yay.git
 cd yay
