@@ -91,6 +91,12 @@ session    optional     pam_gnome_keyring.so auto_start
 xdg-settings set default-web-browser firefox.desktop
 
 # firefox
+about:config
 browser.uidensity 1
 
 xrandr --output DisplayPort-1 --mode 2560x1440 --right-of DisplayPort-2
+
+uncomment [sleep] : /etc/systemd/sleep.conf
+
+apply : https://github.com/pixeltris/TwitchAdSolutions
+
