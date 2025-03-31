@@ -100,3 +100,5 @@ uncomment [sleep] : /etc/systemd/sleep.conf
 
 apply : https://github.com/pixeltris/TwitchAdSolutions
 
+echo -e "nameserver 8.8.8.8\nnameserver 1.1.1.1"
+
