@@ -70,10 +70,8 @@ network-manager-applet vlc zvbi kdenlive openssh sshfs rsync percona-server-clie
 python python-pip nemo-fileroller nemo-image-converter inetutils noto-fonts noto-fonts-emoji \
 ttf-dejavu python python-pip nemo-fileroller nemo-image-converter gnome-keyring thunderbird ffmpegthumbnailer nmap minidlna os-prober piper
 
-cd /tmp && git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
-yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer vlc-bittorrent
+cd /tmp && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer vlc-bittorrent headsetcontrol
 
 # swap
 dd if=/dev/zero of=/swapfile bs=1M count=8k status=progress
