@@ -16,7 +16,6 @@ mkfs.fat -F32 /dev/nvme0n1p1
 mount /dev/nvme0n1p2 /mnt
 mkdir /mnt/boot/
 mount /dev/nvme0n1p1 /mnt/boot
-swapon /dev/nvme0n1p2
 
 pacman -Sy archlinux-keyring && pacman -Syu
 pacstrap /mnt base base-devel linux linux-firmware nano
