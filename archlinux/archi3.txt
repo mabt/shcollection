@@ -24,14 +24,14 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt
 
+passwd
+
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
 hwclock --systohc
 nano /etc/locale.gen
 locale-gen
 echo "desktop" > /etc/hostname
 echo "127.0.0.1 localhost" > /etc/hosts
-
-passwd
 
 useradd --create-home mabe
 passwd mabe
@@ -40,22 +40,20 @@ su mabe -
 
 sudo pacman -S grub git dhcpcd sudo net-tools ntp networkmanager xorg xorg-xinit xorg-xrandr xf86-video-amdgpu i3
 
-systemctl enable dhcpcd NetworkManager ntpd
+sudo systemctl enable dhcpcd NetworkManager ntpd
 
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --boot-directory=/boot/EFI --recheck --removable
-mkdir -p /boot/EFI/grub/
-# edit /etc/default/grub -> GRUB_DISABLE_OS_PROBER=false
-os-prober
+sudo grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --boot-directory=/boot/EFI --recheck --removable
+sudo mkdir -p /boot/EFI/grub/
 sudo grub-mkconfig -o /boot/EFI/grub/grub.cfg
 
 #mkinitcpio -P # if encrypted
 
-# create .xinitrc
+nano .xinitrc
 eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 exec i3
 
-# edit .bash_profile
+nano .bash_profile
 [[ "$(tty)" == '/dev/tty1' ]] && [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx >/dev/null 2>&1
 
 reboot
@@ -71,17 +69,23 @@ python python-pip nemo-fileroller nemo-image-converter inetutils noto-fonts noto
 ttf-dejavu python python-pip nemo-fileroller nemo-image-converter gnome-keyring thunderbird ffmpegthumbnailer nmap minidlna os-prober piper
 
 cd /tmp && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
-yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer vlc-bittorrent headsetcontrol
+yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer vlc-bittorrent headsetcontrol update-grub
+
+nano /etc/default/grub
+GRUB_DISABLE_OS_PROBER=false
+os-prober
+sudo grub-mkconfig -o /boot/EFI/grub/grub.cfg
 
 # swap
+su
 dd if=/dev/zero of=/swapfile bs=1M count=8k status=progress
 chmod 0600 /swapfile
 mkswap -U clear /swapfile
 swapon /swapfile
 /swapfile none swap defaults 0 0 # /etc/fstab
 
-# gnome keyring
-/etc/pam.d/login
+# GNOME Keyring (a collection of components in GNOME that store secrets, passwords, keys, certificates and make them available to applications. )
+nano /etc/pam.d/login
 auth       optional     pam_gnome_keyring.so
 ...
 session    optional     pam_gnome_keyring.so auto_start
@@ -98,5 +102,9 @@ uncomment [sleep] : /etc/systemd/sleep.conf
 
 apply : https://github.com/pixeltris/TwitchAdSolutions
 
-echo -e "nameserver 8.8.8.8\nnameserver 1.1.1.1"
+echo -e "nameserver 8.8.8.8\nnameserver 1.1.1.1" > /etc/resolv.conf
 
+sudo chattr -i /etc/resolv.conf
+
+https://addons.mozilla.org/en-US/firefox/addon/français-language-pack/
+https://addons.mozilla.org/en-US/firefox/addon/dictionnaire-français1/
