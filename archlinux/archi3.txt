@@ -14,7 +14,7 @@ mkfs.ext4 /dev/nvme0n1p2
 mkfs.fat -F32 /dev/nvme0n1p1
 
 mount /dev/nvme0n1p2 /mnt
-mkdir /mnt/boot/
+mkdir /mnt/boot
 mount /dev/nvme0n1p1 /mnt/boot
 
 pacman -Sy archlinux-keyring && pacman -Syu
@@ -24,7 +24,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 
 passwd
-
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
 hwclock --systohc
 nano /etc/locale.gen
@@ -35,14 +34,12 @@ echo "127.0.0.1 localhost" > /etc/hosts
 useradd --create-home mabe
 passwd mabe
 echo "%mabe ALL=(ALL:ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/mabe
-su mabe -
+su - mabe
 
-sudo pacman -S grub git dhcpcd sudo net-tools ntp networkmanager xorg xorg-xinit xorg-xrandr xf86-video-amdgpu i3
-
+sudo pacman -S grub git dhcpcd sudo net-tools ntp networkmanager xorg xorg-xinit xorg-xrandr xf86-video-amdgpu i3 firefox terminator
 sudo systemctl enable dhcpcd NetworkManager ntpd
 
 sudo grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --boot-directory=/boot/EFI --recheck --removable
-sudo mkdir -p /boot/EFI/grub/
 sudo grub-mkconfig -o /boot/EFI/grub/grub.cfg
 
 #mkinitcpio -P # if encrypted
@@ -101,7 +98,8 @@ uncomment [sleep] : /etc/systemd/sleep.conf
 
 apply : https://github.com/pixeltris/TwitchAdSolutions
 
-echo -e "nameserver 8.8.8.8\nnameserver 1.1.1.1" > /etc/resolv.conf
+#echo -e "nameserver 8.8.8.8\nnameserver 1.1.1.1" > /etc/resolv.conf
+echo -e "nameserver 192.168.1.149" > /etc/resolv.conf
 
 sudo chattr -i /etc/resolv.conf
 
