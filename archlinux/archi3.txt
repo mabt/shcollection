@@ -36,7 +36,21 @@ passwd mabe
 echo "%mabe ALL=(ALL:ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/mabe
 su - mabe
 
-sudo pacman -S grub git dhcpcd sudo net-tools ntp networkmanager xorg xorg-xinit xorg-xrandr xf86-video-amdgpu i3 firefox terminator
+# amd
+sudo pacman -S xf86-video-amdgpu
+
+# nvidia
+sudo yay -S nvidia-open nvidia-settings
+lspci -k -d ::03xx
+
+sudo nano /etc/X11/xorg.conf.d/20-nvidia.conf
+Section "Device"
+    Identifier  "NVIDIA Card"
+    Driver      "nvidia"
+    BusID       "PCI:1:0:0"
+EndSection
+
+sudo pacman -S grub git dhcpcd sudo net-tools ntp networkmanager xorg xorg-xinit xorg-xrandr  i3 firefox terminator
 sudo systemctl enable dhcpcd NetworkManager ntpd
 
 sudo grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --boot-directory=/boot/EFI --recheck --removable
@@ -53,6 +67,12 @@ nano .bash_profile
 [[ "$(tty)" == '/dev/tty1' ]] && [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx >/dev/null 2>&1
 
 reboot
+
+# test nvidia
+nvidia-smi
+cat /var/log/Xorg.0.log | grep -i nvidia
+cat /home/mabe/.local/share/xorg/Xorg.0.log | grep -i nvidia
+
 
 localectl set-x11-keymap fr
 localectl status
