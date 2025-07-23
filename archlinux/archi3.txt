@@ -85,7 +85,7 @@ python python-pip nemo-fileroller nemo-image-converter inetutils noto-fonts noto
 ttf-dejavu python python-pip nemo-fileroller nemo-image-converter gnome-keyring thunderbird ffmpegthumbnailer nmap minidlna os-prober piper
 
 cd /tmp && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
-yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer vlc-bittorrent headsetcontrol update-grub insync
+yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer vlc-bittorrent headsetcontrol update-grub insync wireguard
 
 nano /etc/default/grub
 GRUB_DISABLE_OS_PROBER=false
