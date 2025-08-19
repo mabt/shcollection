@@ -85,7 +85,7 @@ python python-pip nemo-fileroller nemo-image-converter inetutils noto-fonts noto
 ttf-dejavu python python-pip nemo-fileroller nemo-image-converter gnome-keyring thunderbird ffmpegthumbnailer nmap minidlna os-prober piper wireguard-tools gnu-netcat
 
 cd /tmp && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
-yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer vlc-bittorrent headsetcontrol update-grub insync npm
+yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer vlc-bittorrent headsetcontrol update-grub insync npm nordvpn
 
 npm install -g @anthropic-ai/claude-code
 
