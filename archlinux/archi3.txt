@@ -83,7 +83,7 @@ unp telegram-desktop polybar openvpn gthumb flameshot emacs-nox p7zip unzip unra
 network-manager-applet vlc vlc-plugins-all zvbi kdenlive openssh sshfs rsync percona-server-clients bash-completion bzip2 iotop ncdu traceroute \
 python python-pip nemo-fileroller nemo-image-converter inetutils noto-fonts noto-fonts-emoji \
 ttf-dejavu python python-pip nemo-fileroller nemo-image-converter gnome-keyring thunderbird ffmpegthumbnailer nmap minidlna os-prober piper \
-wireguard-tools gnu-netcat autorandr udiskie
+wireguard-tools gnu-netcat autorandr udiskie tldr
 
 cd /tmp && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer vlc-bittorrent headsetcontrol update-grub insync npm nordvpn
