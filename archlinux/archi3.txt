@@ -1,14 +1,10 @@
 https://archlinux.org/download/
-
 dd bs=4M if=path/to/archlinux-version-x86_64.iso of=/dev/sdx conv=fsync oflag=direct status=progress
-
-boot uefi
+# boot uefi
 
 loadkeys fr
 ls /sys/firmware/efi/efivars # check uefi
 timedatectl set-ntp true
-
-fdisk -l
 
 mkfs.ext4 /dev/nvme0n1p2
 mkfs.fat -F32 /dev/nvme0n1p1
@@ -17,7 +13,7 @@ mount /dev/nvme0n1p2 /mnt
 mkdir /mnt/boot
 mount /dev/nvme0n1p1 /mnt/boot
 
-pacman -Sy archlinux-keyring && pacman -Syu
+pacman -Sy archlinux-keyring
 pacstrap /mnt base base-devel linux linux-firmware nano
 genfstab -U /mnt >> /mnt/etc/fstab
 
@@ -26,8 +22,7 @@ arch-chroot /mnt
 passwd
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
 hwclock --systohc
-nano /etc/locale.gen
-locale-gen
+nano /etc/locale.gen && locale-gen
 echo "desktop" > /etc/hostname
 echo "127.0.0.1 localhost" > /etc/hosts
 
@@ -40,7 +35,7 @@ su - mabe
 sudo pacman -S xf86-video-amdgpu
 
 # nvidia
-sudo yay -S nvidia-open nvidia-settings
+sudo pacman -S nvidia-open nvidia-settings
 lspci -k -d ::03xx
 
 sudo nano /etc/X11/xorg.conf.d/20-nvidia.conf
@@ -56,8 +51,6 @@ sudo systemctl enable dhcpcd NetworkManager ntpd
 sudo grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub --boot-directory=/boot/EFI --recheck --removable
 sudo grub-mkconfig -o /boot/EFI/grub/grub.cfg
 
-#mkinitcpio -P # if encrypted
-
 nano .xinitrc
 eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
@@ -68,14 +61,7 @@ nano .bash_profile
 
 reboot
 
-# test nvidia
-nvidia-smi
-cat /var/log/Xorg.0.log | grep -i nvidia
-cat /home/mabe/.local/share/xorg/Xorg.0.log | grep -i nvidia
-
-
 localectl set-x11-keymap fr
-localectl status
 
 sudo pacman -S network-manager-applet rofi dunst alsa-utils pulseaudio pavucontrol pasystray tmux \
 keepassxc discord nextcloud-client filezilla featherpad libreoffice chromium terminator gimp imagemagick transmission-qt htop nemo \
@@ -83,10 +69,10 @@ unp telegram-desktop polybar openvpn gthumb flameshot emacs-nox p7zip unzip unra
 network-manager-applet vlc vlc-plugins-all zvbi kdenlive openssh sshfs rsync percona-server-clients bash-completion bzip2 iotop ncdu traceroute \
 python python-pip nemo-fileroller nemo-image-converter inetutils noto-fonts noto-fonts-emoji \
 ttf-dejavu python python-pip nemo-fileroller nemo-image-converter gnome-keyring thunderbird ffmpegthumbnailer nmap minidlna os-prober piper \
-wireguard-tools gnu-netcat autorandr udiskie tldr
+wireguard-tools autorandr udiskie tldr glow
 
 cd /tmp && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
-yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer vlc-bittorrent headsetcontrol update-grub insync npm nordvpn
+yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer vlc-bittorrent headsetcontrol update-grub insync npm nordvpn gnu-netcat
 
 npm install -g @anthropic-ai/claude-code
 
