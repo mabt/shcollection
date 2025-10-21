@@ -76,7 +76,7 @@ unp telegram-desktop polybar openvpn gthumb flameshot emacs-nox p7zip unzip unra
 network-manager-applet vlc vlc-plugins-all zvbi kdenlive openssh sshfs rsync percona-server-clients bash-completion bzip2 iotop ncdu traceroute \
 python python-pip nemo-fileroller nemo-image-converter inetutils noto-fonts noto-fonts-emoji \
 ttf-dejavu python python-pip nemo-fileroller nemo-image-converter gnome-keyring thunderbird ffmpegthumbnailer nmap minidlna os-prober piper \
-wireguard-tools autorandr udiskie tldr glow
+wireguard-tools autorandr udiskie tldr glow bluez bluez-utils blueman
 
 cd /tmp && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 yay -S zoiper raw-thumbnailer downgrade redshifter simple-mtpfs typora ffmpeg-thumbnailer vlc-bittorrent headsetcontrol update-grub insync npm nordvpn gnu-netcat
@@ -123,3 +123,21 @@ sudo systemctl start openvpn-client@confname && sudo systemctl enable openvpn-cl
 
 https://addons.mozilla.org/en-US/firefox/addon/français-language-pack/
 https://addons.mozilla.org/en-US/firefox/addon/dictionnaire-français1/
+
+
+lsmod | grep btusb
+systemctl start bluetooth.service
+systemctl enable bluetooth.service
+bluetoothctl
+power on
+agent on
+default-agent
+scan on
+[bluetooth]$ trust $MAC
+bluetooth]$ pair $MAC
+[bluetooth]$ connect $MAC
+scan off
+exit
+
+nano /etc/bluetooth/main.conf
+utoEnable=true
