@@ -1,0 +1,6 @@
+archlinux.iso
+sha256sums.txt
+disk.qcow2
+vars.fd
+*.log
+status.txt
