@@ -20,7 +20,17 @@ RAW_URL="${RAW_URL:-https://raw.githubusercontent.com/mabt/shcollection/main/arc
 [[ -b "$DISK" ]] || { echo "ERREUR : $DISK introuvable"; exit 1; }
 ping -c1 -W3 archlinux.org >/dev/null || { echo "ERREUR : pas de réseau (iwctl pour le wifi)"; exit 1; }
 
-echo "!!! TOUT LE CONTENU DE $DISK VA ETRE EFFACE !!!"
+echo "=== Disques détectés ==="
+lsblk -dno NAME,SIZE,MODEL
+# si plusieurs NVMe : l'ordre nvme0/nvme1 n'est pas stable d'un boot à
+# l'autre -> exiger un choix explicite et assumé
+if [[ -z "${DISK_FORCE:-}" && $(ls -1 /dev/nvme?n1 2>/dev/null | wc -l) -gt 1 ]]; then
+    echo "ERREUR : plusieurs NVMe détectés — relancer avec DISK=/dev/nvmeXn1 DISK_FORCE=1"
+    exit 1
+fi
+
+echo
+echo "!!! TOUT LE CONTENU DE $DISK ($(lsblk -dno SIZE,MODEL "$DISK")) VA ETRE EFFACE !!!"
 lsblk "$DISK"
 read -rp "Taper OUI pour continuer : " confirm
 [[ "$confirm" == "OUI" ]] || exit 1
