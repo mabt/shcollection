@@ -18,10 +18,11 @@ if ! command -v yay >/dev/null; then
     (cd /tmp/yay && makepkg -si --noconfirm)
 fi
 
-# = pacman -Qqem du 2026-07-02 (moins yay lui-même)
+# = pacman -Qqem du 2026-08-03 (moins yay lui-même)
+# swaylock-effects fournit le binaire swaylock (remplace celui du dépôt, phase 2)
 yay -S --noconfirm --needed \
     anydesk-bin downgrade insync nordvpn-bin raw-thumbnailer \
-    redshifter rustdesk-bin simple-mtpfs typora update-grub \
+    redshifter rustdesk-bin simple-mtpfs swaylock-effects typora update-grub \
     vlc-bittorrent witr zoiper-bin
 
 # ------------------------- DOTFILES (chezmoi) ------------------------
@@ -45,5 +46,5 @@ cat <<'EOF'
  - openvpn : copier le .conf puis systemctl enable openvpn-client@<nom>
  - firefox : addons + about:config (browser.uidensity=1)
  - disque LUKS sdb1 : brancher la YubiKey, config déverrouillage (yk-unlock-gui)
- - crontab -e : réimporter les crons (bell, alerting, backup-claude-remote-mirror)
+ - crontab -e : réimporter les crons (bell, alerting)
 EOF

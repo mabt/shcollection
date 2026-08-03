@@ -43,17 +43,20 @@ sed -i 's/^#\?ParallelDownloads.*/ParallelDownloads = 10/; s/^#Color$/Color/' /e
 # multilib volontairement désactivé
 
 # ------------------------- PAQUETS DESKTOP ---------------------------
-# = pacman -Qqen du 2026-07-02, moins la base (phase 1), moins
-#   autorandr (X11, inutile sous sway) et dhcpcd (doublon de NM)
+# = pacman -Qqen du 2026-08-03, moins la base (phase 1), moins
+#   autorandr (X11, inutile sous sway) et dhcpcd (doublon de NM).
+#   NB: swaylock remplacé par swaylock-effects (AUR) -> phase 3.
+#   gammastep (night-light, Mod+m), cliphist (presse-papier, Mod+p) et
+#   wireplumber (volume via wpctl) requis par la config sway/waybar.
 pacman -Syu --noconfirm --needed \
-  sway swaybg swayidle swaylock waybar wofi bemenu mako foot \
-  grim slurp satty flameshot wl-clipboard xdg-desktop-portal-wlr snixembed \
+  sway swaybg swayidle waybar wofi bemenu mako foot gammastep \
+  grim slurp satty flameshot wl-clipboard cliphist xdg-desktop-portal-wlr snixembed \
   xorg-xwayland xclip polkit-gnome ly \
   nvidia-open nvidia-settings libva-nvidia-driver libva-utils \
-  pipewire-alsa pipewire-pulse alsa-utils pavucontrol pasystray \
+  pipewire-alsa pipewire-pulse wireplumber alsa-utils pavucontrol pasystray \
   bluez bluez-utils blueman headsetcontrol piper \
   network-manager-applet openvpn wireguard-tools openssh sshfs rsync \
-  nmap whois traceroute inetutils net-tools dog wget minidlna \
+  nmap mtr whois traceroute inetutils net-tools dog wget minidlna \
   firefox chromium thunderbird terminator tmux \
   keepassxc discord telegram-desktop nextcloud-client filezilla \
   featherpad libreoffice-fresh gimp kdenlive mpv vlc vlc-plugins-all zvbi \
@@ -63,6 +66,7 @@ pacman -Syu --noconfirm --needed \
   chezmoi github-cli emacs-nox npm php php-sqlite python-pip \
   python-lz4 python-maxminddb jq glow tldr fastfetch \
   htop iotop ncdu geoip-database-extra percona-server-clients \
+  qemu-full guestfs-tools tigervnc ttyd \
   bash-completion xdg-user-dirs \
   gnome-keyring cronie smartmontools nvme-cli zram-generator \
   yubico-piv-tool yubikey-manager \
