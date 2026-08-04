@@ -18,12 +18,12 @@ if ! command -v yay >/dev/null; then
     (cd /tmp/yay && makepkg -si --noconfirm)
 fi
 
-# = pacman -Qqem du 2026-08-03 (moins yay lui-même)
+# = pacman -Qqem du 2026-08-04 (moins yay lui-même, amorcé au-dessus)
 # swaylock-effects fournit le binaire swaylock (remplace celui du dépôt, phase 2)
 yay -S --noconfirm --needed \
     anydesk-bin downgrade insync nordvpn-bin raw-thumbnailer \
     redshifter rustdesk-bin simple-mtpfs swaylock-effects typora update-grub \
-    vlc-bittorrent witr zoiper-bin
+    witr zoiper-bin
 
 # ------------------------- DOTFILES (chezmoi) ------------------------
 # Couvre : .bash_profile (lance sway sur tty1/tty2), sway, waybar,
