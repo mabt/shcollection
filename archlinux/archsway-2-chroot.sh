@@ -48,6 +48,8 @@ sed -i 's/^#\?ParallelDownloads.*/ParallelDownloads = 10/; s/^#Color$/Color/' /e
 #   NB: swaylock remplacé par swaylock-effects (AUR) -> phase 3.
 #   gammastep (night-light, Mod+m), cliphist (presse-papier, Mod+p) et
 #   wireplumber (volume via wpctl) requis par la config sway/waybar.
+#   less : $PAGER par défaut, sinon `glow -p` referme sa fenêtre aussitôt.
+#   moreutils : sponge, utilisé dans les one-liners de maintenance.
 pacman -Syu --noconfirm --needed \
   sway swaybg swayidle waybar wofi bemenu mako foot gammastep \
   grim slurp satty flameshot wl-clipboard cliphist xdg-desktop-portal-wlr snixembed \
@@ -67,7 +69,7 @@ pacman -Syu --noconfirm --needed \
   python-lz4 python-maxminddb jq glow tldr fastfetch \
   htop iotop ncdu geoip-database-extra percona-server-clients \
   qemu-full guestfs-tools tigervnc ttyd \
-  bash-completion xdg-user-dirs \
+  bash-completion xdg-user-dirs less moreutils \
   gnome-keyring cronie smartmontools nvme-cli zram-generator \
   yubico-piv-tool yubikey-manager \
   noto-fonts noto-fonts-emoji ttf-dejavu
@@ -111,8 +113,13 @@ grep -q pam_gnome_keyring /etc/pam.d/login || {
 }
 
 # ------------------------- SERVICES ----------------------------------
+# pcscd.socket : indispensable à la YubiKey PIV. Sans lui, libykcs11 ne voit
+# pas la clé ("Échec du chargement de la clé PIV", `ykman list` → "PC/SC not
+# available") — donc la phase 3 ne peut même pas cloner le repo dotfiles privé.
+# Les paquets pcsclite et ccid arrivent en dépendance de yubikey-manager.
 systemctl enable NetworkManager bluetooth cronie systemd-timesyncd fstrim.timer \
                  nvidia-suspend nvidia-resume nvidia-hibernate \
+                 pcscd.socket \
                  getty@tty2
 
 echo "=== Phase 2 (chroot) terminée ==="

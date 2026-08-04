@@ -46,5 +46,11 @@ cat <<'EOF'
  - openvpn : copier le .conf puis systemctl enable openvpn-client@<nom>
  - firefox : addons + about:config (browser.uidensity=1)
  - disque LUKS sdb1 : brancher la YubiKey, config déverrouillage (yk-unlock-gui)
- - crontab -e : réimporter les crons (bell, alerting)
+ - une fois Insync connecté ET la 1re synchro terminée : relancer
+   `chezmoi apply`. Le dossier Insync n'existe pas encore à ce stade, donc
+   le hook 20-system-setup n'a pas pu créer le symlink ~/claude (il le dit
+   et ne casse rien). Ce 2e passage le crée et repose les règles d'exclusion.
+   ATTENTION : si ~/claude est un VRAI dossier, ne pas le supprimer —
+   fusionner d'abord (rsync -a ~/claude/ <dossier Insync>/, vérifier les
+   deux sens) avant de le remplacer par le lien.
 EOF
