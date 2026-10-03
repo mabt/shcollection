@@ -57,7 +57,7 @@ pacman -Syu --noconfirm --needed \
   nvidia-open nvidia-settings libva-nvidia-driver libva-utils \
   pipewire-alsa pipewire-pulse wireplumber alsa-utils pavucontrol pasystray \
   bluez bluez-utils blueman headsetcontrol piper \
-  network-manager-applet openvpn wireguard-tools openssh sshfs rsync \
+  network-manager-applet openvpn wireguard-tools tailscale openssh sshfs rsync \
   nmap mtr whois traceroute inetutils net-tools dog wget minidlna \
   firefox chromium thunderbird terminator tmux \
   keepassxc discord telegram-desktop nextcloud-client filezilla \
@@ -67,7 +67,7 @@ pacman -Syu --noconfirm --needed \
   7zip unzip unrar unrar-free unp dosfstools \
   chezmoi github-cli emacs-nox npm php php-sqlite python-pip \
   python-lz4 python-maxminddb jq glow tldr fastfetch \
-  htop iotop ncdu geoip-database-extra percona-server-clients \
+  htop iotop ncdu geoip-database-extra percona-server-clients gnome-disk-utility mesa-utils \
   qemu-full guestfs-tools tigervnc ttyd \
   bash-completion xdg-user-dirs less moreutils \
   gnome-keyring cronie smartmontools nvme-cli zram-generator \
@@ -117,7 +117,7 @@ grep -q pam_gnome_keyring /etc/pam.d/login || {
 # pas la clé ("Échec du chargement de la clé PIV", `ykman list` → "PC/SC not
 # available") — donc la phase 3 ne peut même pas cloner le repo dotfiles privé.
 # Les paquets pcsclite et ccid arrivent en dépendance de yubikey-manager.
-systemctl enable NetworkManager bluetooth cronie systemd-timesyncd fstrim.timer \
+systemctl enable NetworkManager bluetooth cronie systemd-timesyncd fstrim.timer tailscaled \
                  nvidia-suspend nvidia-resume nvidia-hibernate \
                  pcscd.socket \
                  getty@tty2

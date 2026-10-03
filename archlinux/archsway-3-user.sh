@@ -43,6 +43,8 @@ cat <<'EOF'
  - reboot (ou Ctrl-D : l'autologin tty2 relance sway via .bash_profile)
  - bluetoothctl : pairing clavier/casque (trust/pair/connect $MAC)
  - nordvpn login / insync / nextcloud : connexion aux comptes
+ - tailscale : sudo tailscale up (connexion au tailnet, MagicDNS)
+ - Home Assistant : recréer un jeton longue durée -> ~/.ha_token/dashboard.token (chmod 600)
  - openvpn : copier le .conf puis systemctl enable openvpn-client@<nom>
  - firefox : addons + about:config (browser.uidensity=1)
  - disque LUKS sdb1 : brancher la YubiKey, config déverrouillage (yk-unlock-gui)
